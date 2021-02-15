@@ -29,13 +29,13 @@ module "eks_cluster" {
 resource "null_resource" "coredns" {
   depends_on = [ module.eks_cluster ]
   provisioner "local-exec" {
-    command = "sudo aws eks --region ${var.region} update-kubeconfig --name ${local.cluster_name}"
+    command = "aws eks --region ${var.region} update-kubeconfig --name ${local.cluster_name}"
   }
   provisioner "local-exec" {
-    command = "sudo kubectl patch deployment coredns -n kube-system --type json -p='[{'op': 'remove', 'path': '/spec/template/metadata/annotations/eks.amazonaws.com~1compute-type'}]'"
+    command = "kubectl patch deployment coredns -n kube-system --type json -p='[{'op': 'remove', 'path': '/spec/template/metadata/annotations/eks.amazonaws.com~1compute-type'}]'"
   }
   provisioner "local-exec" {
-    command = "sudo kubectl rollout restart -n kube-system deployment coredns"
+    command = "kubectl rollout restart -n kube-system deployment coredns"
   }
 }
 module "alb_ingress_controller" {
