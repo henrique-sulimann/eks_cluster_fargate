@@ -6,3 +6,7 @@ variable "cluster_name" {
   type = string
   default = "eks_terraform_fargate"
 }
+variable "teste" {
+  default = ""
+}
+
