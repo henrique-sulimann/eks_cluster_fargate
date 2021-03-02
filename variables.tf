@@ -6,3 +6,6 @@ variable "cluster_name" {
   type = string
   default = "eks_terraform_fargate"
 }
+variable "vpc" {}
+variables "subnet" {}
+variables "env" {}

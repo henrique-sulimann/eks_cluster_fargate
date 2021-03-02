@@ -37,6 +37,18 @@ resource "null_resource" "coredns" {
   provisioner "local-exec" {
     command = "kubectl rollout restart -n kube-system deployment coredns"
   }
+  provisioner "local-exec" {
+    command = "kubectl -n kube-system apply -f external-dns.yaml"
+  }
+  provisioner "local-exec" {
+    command = "kubectl -n kube-system apply -f external-serviceaccount.yaml"
+  }
+  provisioner "local-exec" {
+    command = "kubectl -n kube-system apply -f rbac.yaml"
+  }
+  provisioner "local-exec" {
+    command = "kubectl -n kube-system apply -f rbac-binding.yaml"
+  }
 }
 module "alb_ingress_controller" {
   source = "git::https://github.com/iplabs/terraform-kubernetes-alb-ingress-controller.git//?ref=v3.4.0"
